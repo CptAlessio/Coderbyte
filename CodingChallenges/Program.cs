@@ -7,7 +7,7 @@ using System.Globalization;
 
 /// <summary>
 /// Alessio Marziali
-/// Project containing coding solutions challenge I have completed on Coderbyte (coding assessment platform)
+/// solutions to coding challenges  I have completed on Coderbyte (coding assessment platform)
 /// URL : https://coderbyte.com/profile/RegiaMarinaAlex
 /// </summary>
 namespace CodingChallenges
@@ -15,11 +15,10 @@ namespace CodingChallenges
     class Program
     {
         static void Main(string[] args) {
-            int[] b = new int[] { 2, 2, 2, 2 };
+            var b = new int[] { 2, 2, 2, 2 };
             Console.WriteLine(SimpleMode(new int[] { 4, 4, 5, 6, 7, 8, 8, 8, 8, 8 }));
             Console.ReadLine();
         }
-
 
         public static int SimpleMode(int[] arr)
         {
@@ -27,24 +26,18 @@ namespace CodingChallenges
            .Where(g => g.Count() > 1)
            .Select(y => y.Key)
            .ToList();
-
             
-            if (query.Count >= 1)
-            {
-               
-                return query.First();
-            }
-            return 0;
+            return query.Count >= 1 ? query.First() : 0;
         }
 
         public static string AlphabetSoup(string str)
         {
-            char[] stringToArray = str.ToCharArray();
+            var stringToArray = str.ToCharArray();
             Array.Sort(stringToArray);
 
-            StringBuilder b = new StringBuilder();
+            var b = new StringBuilder();
 
-            foreach(char s in stringToArray)
+            foreach(var s in stringToArray)
             {
                 b.Append(s);
             }
@@ -54,89 +47,63 @@ namespace CodingChallenges
 
         public static int NumberSearch(string str)
         {
-            // Numbers
-            Regex ex = new Regex("-*[0-9]");
-            MatchCollection coll = ex.Matches(str);
-
-            int totalSum = 0;
+            var ex = new Regex("-*[0-9]");
+            var coll = ex.Matches(str);
+            var totalSum = 0;
 
             foreach (Match mtch in coll)
             {
-                totalSum = totalSum + int.Parse(mtch.Value);
+                totalSum += int.Parse(mtch.Value);
             }
 
-            // letters
-            Regex ex2 = new Regex("[a-zA-Z]");
-            MatchCollection coll2 = ex2.Matches(str);
-            List<string> outputNumberColl2 = new List<string>();
+            var ex2 = new Regex("[a-zA-Z]");
+            var coll2 = ex2.Matches(str);
+            var outputNumberColl2 = new List<string>();
             foreach (Match mtch in coll2)
             {
                 outputNumberColl2.Add(mtch.Value);
             }
 
-            decimal output2 = decimal.Parse(totalSum.ToString()) / decimal.Parse(outputNumberColl2.Count().ToString());
-
-            int output = int.Parse(Decimal.Round(output2).ToString());
+            var output2 = decimal.Parse(totalSum.ToString()) / decimal.Parse(outputNumberColl2.Count.ToString());
+            var output = int.Parse(decimal.Round(output2).ToString());
             return output;
         }
 
         public static string BinaryConverter(string str)
         {
-            //var output = Convert.ToInt32(str, 2).ToString(); ;
             return Convert.ToInt32(str, 2).ToString();
         }
 
         public static int Consecutive(int[] arr)
         {
-            int a = arr.OrderBy(x => x).First();
-            int b = arr.OrderBy(x => x).Last();
-
-            int output = 0;
-
-            List<int> myList2 = Enumerable.Range(a, b - a + 1).ToList();
+            var a = arr.OrderBy(x => x).First();
+            var b = arr.OrderBy(x => x).Last();
+            var output = 0;
+            var myList2 = Enumerable.Range(a, b - a + 1).ToList();
             output = myList2.Except(arr).ToList().Count;
-
             return output;
         }
 
         public static int TripleDouble(int num1, int num2)
         {
-            int output = 0;
+            var output = 0;
 
             /// three in num1 and two in num2
-            char[] firstString = num1.ToString().ToCharArray();
-            char[] secondString = num2.ToString().ToCharArray();
+            var firstString = num1.ToString().ToCharArray();
+            var secondString = num2.ToString().ToCharArray();
 
-            var query = firstString.GroupBy(x => x)
-              .Where(g => g.Count() > 1)
-              .Select(y => y.Key)
-              .ToList();
+            var query = (from g in firstString.GroupBy(x => x) where g.Count() > 1 select g.Key).ToList();
+            var counter = firstString.Where(t => query.Count >= 1).Count(t => t == query.First());
+            var secondCounter = 0;
 
-            int counter = 0;
-            int secondCounter = 0;
-
-            for (int i =0; i< firstString.Length;i++)
+            for (var i = 0; i < secondString.Length; i++)
             {
-                if (query.Count >= 1)
+                if (query.Count < 1) continue;
+                if (firstString[i] == query.First())
                 {
-                    if (firstString[i] == query.First())
-                    {
-                        counter++;
-                    }
+                    secondCounter++;
                 }
             }
-
-            for (int i = 0; i < secondString.Length; i++)
-            {
-                if (query.Count >=1)
-                {
-                    if (firstString[i] == query.First())
-                    {
-                        secondCounter++;
-                    }
-                }
-            }
-
             if (counter >= 3 && secondCounter >= 2)
             {
                 output = 1;
@@ -151,22 +118,20 @@ namespace CodingChallenges
         public static string FormattedDivision(int num1, int num2)
         {
             decimal a = num1, b = num2;
-            decimal output = a / b;
+            var output = a / b;
             return output.ToString("###,###,###.####");
         }
 
         public static string RunLength(string str)
         {
-
-            char[] characters = str.ToCharArray();
-            var distinctstr = new List<char>(characters.Distinct());            
-            StringBuilder stringBuilder = new StringBuilder();
-            int counter = 0;
-            for (int i =0;i<characters.Length;i++)
+            var characters = str.ToCharArray();
+            var chars = new List<char>(characters.Distinct());
+            var stringBuilder = new StringBuilder();
+            for (var i =0;i<characters.Length;i++)
             {
-                counter = 0;
-                char corrente = characters[i];
-                for (int i2 = i+1; i < characters.Length; i++)
+                var counter = 0;
+                var corrente = characters[i];
+                for (var i2 = i+1; i < characters.Length; i++)
                 {
                     if (corrente.Equals(characters[i2]))
                     {
@@ -174,59 +139,45 @@ namespace CodingChallenges
                     }
                 }
 
-                if (counter > 1)
+                switch (counter)
                 {
-                    stringBuilder.Append(counter.ToString() + characters[i].ToString());
+                    case > 1:
+                        stringBuilder.Append(counter.ToString() + characters[i].ToString());
+                        break;
+                    case 1:
+                        stringBuilder.Append("1" + characters[i]);
+                        break;
                 }
-
-                if (counter == 1)
-                {
-                    stringBuilder.Append("1" + characters[i]);
-                }
-
             }
             return stringBuilder.ToString();
         }
 
         public static string RunLengthOld(string str)
         {
-            char[] characters = str.ToCharArray();
+            var characters = str.ToCharArray();
             var distinctstr = new List<char>(characters.Distinct());
-            StringBuilder stringBuilder = new StringBuilder();
+            var stringBuilder = new StringBuilder();
 
-            //foreach (char c in query)
-            for (int i = 0; i < distinctstr.Count; i++)
+            foreach (var t in distinctstr)
             {
-                int counter = 0;
-                foreach (char c2 in characters)
+                var counter = characters.Count(c2 => t.Equals(c2));
+                switch (counter)
                 {
-                    if (distinctstr[i].Equals(c2))
-                    {
-                        counter++;
-                    }
+                    case > 1:
+                        stringBuilder.Append(counter.ToString() + t.ToString());
+                        break;
+                    case 1:
+                        stringBuilder.Append("1" + t);
+                        break;
                 }
-
-                if (counter > 1)
-                {
-                    stringBuilder.Append(counter.ToString() + distinctstr[i].ToString());
-                }
-
-                if (counter == 1)
-                {
-                    stringBuilder.Append("1" + distinctstr[i]);
-                }
-
             }
-            // code goes here  
             return stringBuilder.ToString();
         }
 
-
         public static string DivisionStringified(int num1, int num2)
         {
-            double c = 0.0;
-            
-
+            var c = 0.0;
+           
             if (num1 >= 10 && num1 <=100)
             {
 
@@ -236,33 +187,27 @@ namespace CodingChallenges
 
             if (c == 1) { c = 0; }
 
-            var output = c.ToString();
+            var output = c.ToString(CultureInfo.InvariantCulture);
 
-            if (output.Length > 3) { output = string.Format("{0:#,0}", c); }
+            if (output.Length > 3) { output = $"{c:#,0}"; }
             return output;
         }
 
         public static string OtherProducts(int[] arr)
         {
             var arrOutput = new List<int>();
-            var total = 1;
-            
-            foreach (int rr in arr)
+
+            foreach (var rr in arr)
             {
-                total = 1;
-                List<int> inizialeArray = arr.ToList<int>();
+                var inizialeArray = arr.ToList<int>();
                 inizialeArray.Remove(rr);
 
-                foreach(int numero in inizialeArray)
-                {
-                    total = total * numero;
-                    
-                }
+                var total = inizialeArray.Aggregate(1, (current, numero) => current * numero);
                 arrOutput.Add(total);
             }
 
-            StringBuilder b = new StringBuilder();
-            foreach(int ccc in arrOutput)
+            var b = new StringBuilder();
+            foreach(var ccc in arrOutput)
             {
                 b.Append(ccc.ToString() + " ");
             }
@@ -273,13 +218,13 @@ namespace CodingChallenges
 
         public static string FirstReverse(string str)
         {
-            char[] strArrayChar = str.ToCharArray();
+            var strArrayChar = str.ToCharArray();
             Array.Reverse(strArrayChar);
 
-            StringBuilder b = new StringBuilder();
-            foreach (char c in strArrayChar)
+            var b = new StringBuilder();
+            foreach (var c in strArrayChar)
             {
-                b.Append(c.ToString());
+                b.Append(c);
             }
             return b.ToString();
         }
@@ -289,10 +234,10 @@ namespace CodingChallenges
         {
             var treeObject = new Dictionary<string, int>();
             var output = string.Empty;
-            foreach(string singleInputValue in strArr)
+            foreach(var singleInputValue in strArr)
             {
-                string[] currentvalue = singleInputValue.Split(',');
-                string parent = currentvalue[1].Remove(currentvalue[1].Length-1,1);
+                var currentvalue = singleInputValue.Split(',');
+                var parent = currentvalue[1].Remove(currentvalue[1].Length-1,1);
            
                 if (!treeObject.ContainsKey(parent))
                 {
@@ -309,9 +254,9 @@ namespace CodingChallenges
 
         public static string PrimeTime(int num)
         {
-            string output = "false";
-            int a = 0;
-            for (int i = 1; i <= num; i++)
+            var output = "false";
+            var a = 0;
+            for (var i = 1; i <= num; i++)
             {
                 if (num % i == 0)
                 {
@@ -327,14 +272,13 @@ namespace CodingChallenges
 
         public static string LetterChanges(string str)
         {
-            // 1. replace every letter with following alphabet
-            List<char> list = new List<char>();
-            foreach(char c in str)
+            var list = new List<char>();
+            foreach(var c in str)
             {
-                Regex ex = new Regex("[a-z]");
+                var ex = new Regex("[a-z]");
                 if (ex.IsMatch(c.ToString()))
                 {
-                    char newChar = (char)(c + 1);
+                    var newChar = (char)(c + 1);
                     list.Add(newChar);
                 }
                 else
@@ -343,8 +287,8 @@ namespace CodingChallenges
                 }    
             }
             
-            StringBuilder b = new StringBuilder();
-            foreach(char c1 in list)
+            var b = new StringBuilder();
+            foreach(var c1 in list)
             {
                 b.Append(c1);
             }
@@ -355,8 +299,6 @@ namespace CodingChallenges
             output = output.Replace("i", "I");
             output = output.Replace("o", "O");
             output = output.Replace("u", "U");
-
-            // code goes here  
             return output;
         }
 
@@ -367,36 +309,29 @@ namespace CodingChallenges
 
         public static int SimpleAdding(int num)
         {
-            int totalSum = 0;
-            for(int i = 0; i<= num; i++)
+            var totalSum = 0;
+            for(var i = 0; i<= num; i++)
             {
                 totalSum += i; 
             }
             return totalSum;
         }
 
-
         public static string LetterCapitalize(string str)
         {
-            string[] text = str.Split(" ");
-
-            List<string> newtext = new List<string>();
-            foreach(string s in text)
-            {
-                newtext.Add(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(str.ToLower()));
-            }
+            var text = str.Split(" ");
+            var newtext = text.Select(s => CultureInfo.CurrentCulture.TextInfo.ToTitleCase(str.ToLower())).ToList();
             return newtext.First().ToString();
         }
 
-
         public static string CountingMinutesI(string str)
         {
-            string[] inputTimes = str.Split("-");
+            var inputTimes = str.Split("-");
             var firstDate = DateTime.Parse(inputTimes[0]);
             var secondDate = DateTime.Parse(inputTimes[1]);
 
             if (secondDate < firstDate) { secondDate = secondDate.AddDays(1);}
-            TimeSpan difference = secondDate - firstDate;
+            var difference = secondDate - firstDate;
             return difference.TotalMinutes.ToString();
         }
 
@@ -406,44 +341,29 @@ namespace CodingChallenges
             {
                 return "true";
             }
-
-            if (num1 == num2)
-            {
-                return "-1";
-            }
-            return "false";
+            return num1 == num2 ? "-1" : "false";
         }
 
         public static string TimeConvert(int num)
         {
-            string output = string.Empty;
-                DateTime before = DateTime.Now;
-                DateTime after = DateTime.Now.AddMinutes(num);
-                TimeSpan timedifference =  after - before;
-                output = timedifference.TotalHours.ToString().Substring(0,1) + ":" + timedifference.Minutes;
+            var before = DateTime.Now;
+                var after = DateTime.Now.AddMinutes(num);
+                var timedifference =  after - before;
+                var output = timedifference.TotalHours.ToString().Substring(0,1) + ":" + timedifference.Minutes;
            
             return output;
         }
 
         public static string SecondGreatLow(int[] arr)
         {
-            int minimumValue = arr.Min();
-            int maxvalue = arr.Max();
+            var minimumValue = arr.Min();
+            var maxvalue = arr.Max();
+            var secondLowest = arr.Where(r => r > minimumValue).OrderBy(r => r);
+            var secondHighest = arr.Where(h => h < maxvalue).OrderByDescending(h => h);
+            var secondLowestValue = 0; 
+            var secondHighestValue = 0;
 
-            var secondLowest = from r in arr
-                               where r > minimumValue
-                               orderby r
-                               select r;
-
-            var secondHighest = from h in arr
-                                where h < maxvalue
-                                orderby h descending
-                                select h;
-
-            int secondLowestValue = 0; 
-            int secondHighestValue = 0;
-
-            if (secondLowest.Count() == 0 && secondHighest.Count() == 0)
+            if (!secondLowest.Any() && !secondHighest.Any())
             {
                 secondLowestValue = arr[0];
                 secondHighestValue = arr[1];
@@ -454,73 +374,51 @@ namespace CodingChallenges
                 secondHighestValue = secondHighest.First();
             }
 
-            return secondLowestValue.ToString() + " " + secondHighestValue.ToString();
+            return secondLowestValue + " " + secondHighestValue;
         }
 
         public static string ArrayAddition(int[] arr)
         {
-            int maxValue = arr.Max();
-            int minvalue = arr.Min();
+            var maxValue = arr.Max();
+            var sumvalue = 0;
+            var filtered = arr.Where(r => r != maxValue);
 
-            int sumvalue = 0;
+            var filteredArray = filtered.ToArray<int>();
 
-            var filtered = from r in arr
-                           where r != maxValue
-                           select r;
-
-            int[] filteredArray = filtered.ToArray<int>();
-
-            foreach(int currentInt in filteredArray)
+            foreach(var currentInt in filteredArray)
             {
                 sumvalue += currentInt;
 
-                for (int arrIndex = 1; arrIndex < filteredArray.Length; arrIndex++)
+                for (var arrIndex = 1; arrIndex < filteredArray.Length; arrIndex++)
                 {
                     sumvalue += filteredArray[arrIndex];
                     if (sumvalue == maxValue) 
                     { 
                         return "true"; 
                     }
-                    else
-                    {
-                        continue;
-                    }    
                 }
             }
-
-            if (sumvalue == maxValue) { return "true"; } else { return "false";}
-            return string.Empty;
+            return sumvalue == maxValue ? "true" : "false";
         }
-
 
         public static string LetterCount(string str)
         {
-            Dictionary<string, int> collection = new Dictionary<string, int>();
+            var collection = new Dictionary<string, int>();
 
-            int repetition = 0;
-            string output = string.Empty;
-            string[] ar = str.Split(" ");
-            foreach(string s in ar)
+            var output = string.Empty;
+            var ar = str.Split(" ");
+            foreach(var s in ar)
             {
-                repetition = s.Length - s.ToCharArray().Distinct().Count();
+                var repetition = s.Length - s.ToCharArray().Distinct().Count();
                 collection.Add(s, repetition);
             }
 
-            var result = from b in collection
-                         orderby b.Value descending                         
-                         select b;
+            var result = collection.OrderByDescending(b => b.Value);
 
 
-            if (result.Count() != 0)
+            if (result.Any())
             {
-                if (result.First().Value > 0)
-                {
-                    output = result.First().Key;
-                }
-                else
-                {
-                    output = "-1";
-                }        
+                output = result.First().Value > 0 ? result.First().Key : "-1";
             }
             else
             {
@@ -529,13 +427,13 @@ namespace CodingChallenges
             return output;           
         }
 
-
         public static string VowelCount(string str)
         {
-            int counter = 0;
-            foreach(char c in str.ToCharArray())
+            var counter = 0;
+            for (var index = 0; index < str.ToCharArray().Length; index++)
             {
-                if( "aeiouAEIOU".IndexOf(c) >= 0)
+                var c = str.ToCharArray()[index];
+                if ("aeiouAEIOU".Contains(c))
                 {
                     counter++;
                 }
@@ -545,13 +443,12 @@ namespace CodingChallenges
 
         static int recursiveCatalan(int n)
         {
-            int res = 0;
-
+            var res = 0;
             if (n <= 1)
             {
                 return 1;
             }
-            for (int i = 0; i < n; i++)
+            for (var i = 0; i < n; i++)
             {
                 res += recursiveCatalan(i) * recursiveCatalan(n - i - 1);
             }
@@ -560,35 +457,29 @@ namespace CodingChallenges
 
         public static string ABCheck(string str)
         {
-            Regex ex = new Regex("a.{3}b");
-            if (ex.IsMatch(str))
-            {
-                return "true";
-            }
-            return "false";
+            var ex = new Regex("a.{3}b");
+            return ex.IsMatch(str) ? "true" : "false";
         }
         public static string SimpleSymbols2(string str)
         {
-            for (int i = 0; i < str.Length; i++)
+            for (var i = 0; i < str.Length; i++)
             {
-                if (char.IsLetter(str[i]))
+                if (!char.IsLetter(str[i])) continue;
+                if (i == 0 || i == str.Length - 1)
                 {
-                    if (i == 0 || i == str.Length - 1)
+                    // first or last letter auto false
+                    return "false";
+                }
+                else
+                {
+                    // check before after = +                    
+                    if ((str[i-1].ToString().Equals("+")) && (str[i+1].ToString().Equals("+")))
                     {
-                        // first or last letter auto false
-                        return "false";
+                        return "true";
                     }
                     else
                     {
-                        // check before after = +                    
-                        if ((str[i-1].ToString().Equals("+")) && (str[i+1].ToString().Equals("+")))
-                        {
-                            return "true";
-                        }
-                        else
-                        {
-                            return "false";
-                        }
+                        return "false";
                     }
                 }
             }
@@ -597,35 +488,24 @@ namespace CodingChallenges
         }
         public static string SimpleSymbols(string str)
         {
-            bool returnValue = false;
-
-
-            Regex ex1 = new Regex("[a-zA-Z]");
-            int totalLettersInWord = ex1.Matches(str).Count;
+            var returnValue = false;
+            var ex1 = new Regex("[a-zA-Z]");
+            var totalLettersInWord = ex1.Matches(str).Count;
 
             if (totalLettersInWord == 0)
             {
                 return returnValue.ToString(); // false
             }
 
-            Regex ex2 = new Regex(@"(\x2B[\w]\x2b)");
-            int totalCorrectFormat = ex2.Matches(str).Count;
+            var ex2 = new Regex(@"(\x2B[\w]\x2b)");
+            var totalCorrectFormat = ex2.Matches(str).Count;
 
-            if (totalLettersInWord == totalCorrectFormat)
-            {
-                returnValue = true;
-            }
-            else
-            {
-                returnValue = false;
-            }
-
+            returnValue = totalLettersInWord == totalCorrectFormat;
             return returnValue.ToString();
-
         }
         static void ciaociao()
         {
-            string[] args = new string[6];
+            var args = new string[6];
             args[0] = "5";
             args[1] = "Hi Alex how are you doing";
             args[2] = "hI dave how are you doing";
@@ -633,19 +513,17 @@ namespace CodingChallenges
             args[4] = "hidden agenda";
             args[5] = "Alex greeted Martha by saying Hi Martha";
 
-            string output = string.Empty;
-
+            var output = string.Empty;
             try
             {
-                foreach (string s in args)
+                var ex = new Regex(@"^(H|h)(I|i)\s{1}[^D|d]+.+");
+                foreach (var s in args)
                 {
-                    Regex ex = new Regex(@"^(H|h)(I|i)\s{1}[^D|d]+.+");
                     if (ex.IsMatch(s))
                     {
                         output = ex.Match(s).Value;
                     }
                 }
-                
             }
             catch (ArgumentException)
             {
@@ -656,10 +534,10 @@ namespace CodingChallenges
         }
         public static int FirstFactorial(int num)
         {
-            int factorial = num;
-            for (int i = num-1; i>= 1; i--)
+            var factorial = num;
+            for (var i = num-1; i>= 1; i--)
             {
-                factorial = factorial * i;
+                factorial *= i;
             }
 
             Console.WriteLine(factorial);
@@ -667,127 +545,101 @@ namespace CodingChallenges
         }   
         static void reverse()
         {
-            string str = "alessio";
-            char[] strArrayChar = str.ToCharArray();
+            var str = "alessio";
+            var strArrayChar = str.ToCharArray();
             Array.Reverse(strArrayChar);
 
-            StringBuilder b = new StringBuilder();
-            foreach(char c in strArrayChar)
+            var b = new StringBuilder();
+            foreach(var c in strArrayChar)
             {
-                b.Append(c.ToString());
+                b.Append(c);
             }
             Console.WriteLine(b.ToString());
         }
         static string examMethod5()
         {
-            string str = "acc?7??sss?3rr1??????5";
-            char[] stringaArray = str.ToArray();
+            var str = "acc?7??sss?3rr1??????5";
+            var stringaArray = str.ToArray();
 
-            int something = 0;
+            var something = 0;
 
-            bool startCounting = false;
-            int counter = 0;
+            var startCounting = false;
+            var counter = 0;
 
 
-            for (int i = 0; i < str.Length; i++)
+            foreach (var t in str)
             {
                 if (!startCounting)
                 {
                     // if you find another number break;
-                    Regex isNumber = new Regex("[0-9]");
-                    if (isNumber.IsMatch(str[i].ToString()))
+                    var isNumber = new Regex("[0-9]");
+                    if (isNumber.IsMatch(t.ToString()))
                     {
                         startCounting = true;
                         continue;
                     }
                 }
 
-                if (startCounting)
+                if (!startCounting) continue;
                 {
-
                     // if you find another number break;
-                    Regex isNumber = new Regex("[0-9]");
-                    if (isNumber.IsMatch(str[i].ToString()))
+                    var isNumber = new Regex("[0-9]");
+                    if (isNumber.IsMatch(t.ToString()))
                     {
                         break;
                     }
 
                     // it's a string or number
-                    Regex ex = new Regex("[a-zA-Z0-9]");
+                    var ex = new Regex("[a-zA-Z0-9]");
                     if (ex.IsMatch(str[1].ToString()))
                     {
                         // do nothing
                     }
 
                     // question mark
-                    
-                    Regex ex2 = new Regex("[\x3F]");
-                    if (ex2.IsMatch(str[i].ToString()))
+                    var ex2 = new Regex("[\x3F]");
+                    if (ex2.IsMatch(t.ToString()))
                     {
                         counter++;
                     }
                 }
             }
 
-            if (counter == 3)
-            {
-                return "true";
-            }
-            else
-            {
-                return "false";
-            }
-
-
+            return counter == 3 ? "true" : "false";
         }
         static int examMethod4()
         {
-            string test = "(coder)(byte))";
-            char[] provasplit = test.ToArray();
-            var b = from pp in provasplit
-                    where pp.Equals('(')
-                    select pp;
+            var test = "(coder)(byte))";
+            var provasplit = test.ToArray();
+            var b = provasplit.Where(pp => pp.Equals('('));
+            var c = provasplit.Where(oo => oo.Equals(')'));
 
-            var c = from oo in provasplit
-                    where oo.Equals(')')
-                    select oo;
-
-            if (c.Count() == 0 && b.Count() == 0)
+            if (!c.Any() && !b.Any())
             {
                 return 1;
             }
 
-            if (c.Count() == b.Count())
-            {
-                return 1;
-            }
-            else
-            {
-                return 0;
-            }
+            return c.Count() == b.Count() ? 1 : 0;
         }
         static string usernamevalidator(string str)
         {
-            // u__hello_world123
-            // test 1 len 4-25
-
-            bool test_1 = false;
-            bool test_3 = false;
-            bool test_4 = false;
-            bool test_2 = false;
+            var test_1 = false;
+            var test_3 = false;
+            var test_4 = false;
+            var test_2 = false;
             
             if (str.Length >= 4 && str.Length <= 25) 
             {
                 test_1 = true;
             }
 
-            Regex b = new Regex("^[a-z]");
+            var b = new Regex("^[a-z]");
             if (b.IsMatch(str))
             {
                 test_2 = true;
             }
 
-            Regex c = new Regex("([a-zA-Z]+)|([0-9]+)|([_]+)");
+            var c = new Regex("([a-zA-Z]+)|([0-9]+)|([_]+)");
             if (c.IsMatch(str))
             {
                 test_3 = true;
@@ -798,7 +650,7 @@ namespace CodingChallenges
                 test_4 = true;
             }
 
-            string output = string.Empty;
+            var output = string.Empty;
 
             if (test_1 && test_2 && test_3 && test_4)
             {
@@ -810,22 +662,19 @@ namespace CodingChallenges
             }
 
             return output;
-
         }
         static string examMethod3()
         {
-            string[] input = new string[] { "aaffhkksemckelloe", "fhea" };
-            string N, K;
-            N = input[0];
-            K = input[1];
-            char[] charactersNeeded = new char[K.Length];
-            for (int i = 1; i < N.Length; i++)
+            var input = new string[] { "aaffhkksemckelloe", "fhea" };
+            var N = input[0];
+            var K = input[1];
+            for (var i = 1; i < N.Length; i++)
             {
-                string prova = N.Substring(0, i);
-                int good = 0;
-                int bad = 0;
+                var prova = N.Substring(0, i);
+                var good = 0;
+                var bad = 0;
 
-                foreach (char zz in K)
+                foreach (var zz in K)
                 {
                     if (prova.Contains(zz))
                     {
@@ -842,10 +691,9 @@ namespace CodingChallenges
                     }
                 }
 
-                if (good == K.Length)
+                if (good == K.Length) //?
                 {
-                    char[] provasplit = prova.ToArray();
-
+                    var provasplit = prova.ToArray();
                 }
 
             }
@@ -853,18 +701,17 @@ namespace CodingChallenges
         }
         static string examMethod2()
         {
-            string[] input = new string[] { "aaffhkksemckelloe", "fhea" };
-            string N, K;
-            N = input[0];
-            K = input[1];
+            var input = new string[] { "aaffhkksemckelloe", "fhea" };
+            var N = input[0];
+            var K = input[1];
 
-            for (int i = 1; i < N.Length; i++)
+            for (var i = 1; i < N.Length; i++)
             {
-                string prova = N.Substring(0, i);
-                int good = 0;
-                int bad = 0;
+                var prova = N.Substring(0, i);
+                var good = 0;
+                var bad = 0;
           
-                foreach (char zz in K)
+                foreach (var zz in K)
                 {
                     if (prova.Contains(zz))
                     {
@@ -890,33 +737,23 @@ namespace CodingChallenges
         }
         static void examMethod() {
 
-            string[] input = new string[] { "aaffhkksemckelloe", "fhea" };
-            string N, K;
-            N = input[0];
-            K = input[1];
-
-            char[] charactersNeeded = new char[K.Length];
-
-            for (int i = 0; i < K.Length; i++)
+            var input = new string[] { "aaffhkksemckelloe", "fhea" };
+            var N = input[0];
+            var K = input[1];
+            var charactersNeeded = new char[K.Length];
+            for (var i = 0; i < K.Length; i++)
             {
                 charactersNeeded[i] = K[i];
             }
 
-            int totalCharactersINeed            = charactersNeeded.Length;
-            int charactersNlookedthrough        = 0;
-            int charactersFound                 = 0;
+            var totalCharactersINeed            = charactersNeeded.Length;
+            var charactersNlookedthrough        = 0;
+            var charactersFound                 = 0;
 
-            foreach (char c in N)
+            foreach (var c in N)
             {
                 // look into k
-                foreach (char c1 in K)
-                {
-                    if (c == c1)
-                    {
-                        charactersFound++;
-                    }
-                }
-
+                charactersFound += K.Count(c1 => c == c1);
                 charactersNlookedthrough++;
                 if (charactersFound == totalCharactersINeed)
                 {
@@ -925,10 +762,9 @@ namespace CodingChallenges
             }
 
             // I have all the letters I need
-            string output = N.Substring(0, charactersNlookedthrough);
+            var output = N.Substring(0, charactersNlookedthrough);
             Console.WriteLine(output);
-
         }
-    
+   
     }
 }
