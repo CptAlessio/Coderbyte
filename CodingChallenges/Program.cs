@@ -15,8 +15,38 @@ namespace CodingChallenges
     class Program
     {
         static void Main(string[] args) {
-            Console.WriteLine(ArrayMatching(new string[] {"[5, 2, 3]", "[2, 2, 3, 10, 6]"}));
+            Console.WriteLine(Division(100,50));
             Console.ReadLine();
+        }
+        
+        /// <summary>
+        /// Solution to test DIVISION
+        /// "Find Greatest Common factor, return the greatest number that evenly goes into both numbers
+        /// with no remainder." 
+        /// </summary>
+        /// <param name="num1"></param>
+        /// <param name="num2"></param>
+        /// <returns></returns>
+        public static int Division(int num1, int num2) {
+            var result1 = from a in Enumerable.Range(1, num1)
+                where num1 % a == 0
+                select a;
+
+            var num1Numbers = result1.Select(divisor => (divisor)).ToList();
+
+            var result2 = from a in Enumerable.Range(1, num2)
+                where num2 % a == 0
+                select a;
+
+            var num2Numbers = result2.Select(divisor => (divisor)).ToList();
+            
+            var merged = (from currentNumber in num1Numbers
+                select num2Numbers.Where(number => number == currentNumber)
+                into find
+                where find.Any()
+                select find.First()).ToList();
+            
+            return merged.Max();
         }
         
         /// <summary>
@@ -45,7 +75,6 @@ namespace CodingChallenges
                 int secondValue = 0; 
                 try
                 {
-
                     firstValue= int.Parse(oneExCollection[i].Value);
                 }
                 catch
