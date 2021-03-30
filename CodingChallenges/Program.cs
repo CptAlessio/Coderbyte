@@ -6,8 +6,8 @@ using System.Text;
 using System.Globalization;
 
 /// <summary>
-/// Alessio Marziali
-/// solutions to coding challenges  I have completed on Coderbyte (coding assessment platform)
+/// AUTHOR: Alessio Marziali
+/// DESCRIPTION: Coderbyte Coding Challenges working project
 /// URL : https://coderbyte.com/profile/RegiaMarinaAlex
 /// </summary>
 namespace CodingChallenges
@@ -15,9 +15,115 @@ namespace CodingChallenges
     class Program
     {
         static void Main(string[] args) {
-            var b = new int[] { 2, 2, 2, 2 };
-            Console.WriteLine(SimpleMode(new int[] { 4, 4, 5, 6, 7, 8, 8, 8, 8, 8 }));
+            Console.WriteLine(ArrayMatching(new string[] {"[5, 2, 3]", "[2, 2, 3, 10, 6]"}));
             Console.ReadLine();
+        }
+        
+        /// <summary>
+        /// Solution to ArrayMatching test
+        /// </summary>
+        /// <param name="strArr"></param>
+        /// <returns></returns>
+        public static string ArrayMatching(string[] strArr)
+        {
+            var one = strArr[0];
+            var two = strArr[1];
+            Regex ex = new Regex("(,?)[0-9]{1,2}");
+            MatchCollection oneExCollection = ex.Matches(one);
+            MatchCollection twoExCollection = ex.Matches(two);
+
+            int maxFindings = 0;
+            maxFindings = oneExCollection.Count >= twoExCollection.Count
+                ? oneExCollection.Count
+                : twoExCollection.Count;
+            
+            int[] arrayOutput = new int[maxFindings];
+            
+            for (int i = maxFindings - 1; i >= 0; i--)
+            {
+                int firstValue = 0; 
+                int secondValue = 0; 
+                try
+                {
+
+                    firstValue= int.Parse(oneExCollection[i].Value);
+                }
+                catch
+                {
+                    firstValue = 0;
+                }
+                
+                try
+                {
+                    secondValue = int.Parse(twoExCollection[i].Value);
+                }
+                catch
+                {
+                    secondValue = 0;
+                }
+
+                arrayOutput[i] = firstValue + secondValue;
+            }
+
+            StringBuilder b = new StringBuilder();
+            foreach (int i in arrayOutput)
+            {
+                b.Append(i.ToString()+ "-");
+            }
+
+            return b.ToString().Substring(0, b.ToString().Length-1);;
+        }
+        
+        /// <summary>
+        /// Solution to Palindrome test
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string Palindrome(string str)
+        {
+            char[] cInStr = str.ToCharArray();
+            Array.Reverse(cInStr);
+
+            StringBuilder b = new StringBuilder();
+            foreach (char c in cInStr)
+            {
+                b.Append(c);
+            }
+            
+            var result = String.CompareOrdinal(str, b.ToString());
+            if (result == 0)
+            {
+                return "true";
+            }
+            else
+            {
+                return "false";
+            }
+
+        }
+        
+        /// <summary>
+        /// ExOh challenge
+        /// </summary>
+        /// <param name="str">Challenge input</param>
+        /// <returns>true/false</returns>
+        public static string ExOh(string str)
+        {
+            var output = "false";
+            var r1 = new Regex("[o]");
+            var r2 = new Regex("[x]");
+
+            var mtcO = r1.Matches(str);
+            var mtcX = r2.Matches(str);
+
+            var oCounter = mtcO.Count;
+            var xCounter = mtcX.Count();
+
+            if (oCounter.Equals(xCounter))
+            {
+                output = "true";
+            }
+            return output;
         }
 
         public static int SimpleMode(int[] arr)
@@ -559,13 +665,9 @@ namespace CodingChallenges
         static string examMethod5()
         {
             var str = "acc?7??sss?3rr1??????5";
-            var stringaArray = str.ToArray();
-
-            var something = 0;
 
             var startCounting = false;
             var counter = 0;
-
 
             foreach (var t in str)
             {
