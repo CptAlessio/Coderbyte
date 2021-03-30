@@ -15,8 +15,74 @@ namespace CodingChallenges
     class Program
     {
         static void Main(string[] args) {
-            Console.WriteLine(SimplePassword("turkey90AAA="));
+            Console.WriteLine(CaesarCipher("Hello",4));
             Console.ReadLine();
+        }
+        
+        /// <summary>
+        /// Solution to problem Caesar
+        /// Category: Algorithms
+        /// Difficult: Medium
+        /// perform a Caesar Cipher shift on it using the num parameter as the shifting number
+        /// Punctuation, spaces, and capitalization should remain intact
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="num"></param>
+        /// <returns></returns>
+        public static string CaesarCipher(string str, int num)
+        {
+            var strArr = str.ToCharArray();
+            var newChars = new List<char>();
+
+            for (int i = 0; i < strArr.Length; i++)
+            {
+                if (char.IsLetterOrDigit(strArr[i]))
+                {
+                    char tChar = (char) (strArr[i]+num);
+                    newChars.Add(char.IsUpper(strArr[i]) ? char.ToUpper(tChar) : tChar);
+                }
+                else
+                {
+                    newChars.Add(strArr[i]);
+                }
+            }
+
+            StringBuilder bout = new StringBuilder();
+            foreach (var c in newChars)
+            {
+                bout.Append(c);
+            }
+            return bout.ToString();
+        }
+        
+        /// <summary>
+        /// Overload to get around test cases where num would be passed as string instead of int
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="num"></param>
+        /// <returns></returns>
+        public static string CaesarCipher(string str, string num) {
+            return CaesarCipher(str, int.Parse(num));
+        }
+        
+        /// <summary>
+        /// Solution to problem BreacketMatcher
+        ///
+        /// 
+        /// Have the function BracketMatcher(str) take the str parameter being passed and return 1 if
+        /// the brackets are correctly matched and each one is accounted for. Otherwise return 0.
+        /// For example: if str is "(hello (world))", then the output should be 1, but if str is "((hello (world))"
+        /// the the output should be 0 because the brackets do not correctly match up. Only "(" and ")"
+        /// will be used as brackets. If str contains no brackets return 1.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string BracketMatcher(string str) {
+
+            char[] provasplit = str.ToArray();
+            var b = provasplit.Where(pp => pp.Equals('('));
+            var c = provasplit.Where(oo => oo.Equals(')'));
+            return !c.Any() && !b.Any() ? "1" : c.Count() == b.Count() ? "1" : "0";
         }
         
         /// <summary>
