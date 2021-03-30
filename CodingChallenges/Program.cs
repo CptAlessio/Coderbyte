@@ -15,8 +15,67 @@ namespace CodingChallenges
     class Program
     {
         static void Main(string[] args) {
-            Console.WriteLine(Division(100,50));
+            Console.WriteLine(SimplePassword("turkey90AAA="));
             Console.ReadLine();
+        }
+        
+        /// <summary>
+        /// Solution to Test - SimplePassword
+        /// return true if
+        /// 1 - at least one capital letter
+        /// 2 - at least one number
+        /// 3 - one mathematical symbol or !
+        /// 4 - does not have "password" anywhere
+        /// 5 - must be longer than 7 characters and smaller than 31
+        /// </summary>
+        /// <param name="str">Password to test</param>
+        /// <returns>true/false</returns>
+        public static string SimplePassword(string str) {
+
+            var one = false;
+            var two = false;
+            var three = false;
+            var four = false;
+            var five = false;
+
+            Regex ex0 = new Regex("[A-Z]"); // one capital letter
+            if (ex0.IsMatch(str))
+            {
+                one = true;
+            }
+            
+            // test 2
+            Regex ex1 = new Regex("[0-9]"); // one number
+            if (ex1.IsMatch(str))
+            {
+                two = true;
+            }
+            
+            // test 3 - one of these characters !+=-/*
+            Regex ex = new Regex(@"(\x21)|(\x2A)|(\x2B)|(\x2D)|(\x2F)|(\x3D)");
+            if (ex.IsMatch(str))
+            {
+                three = true;
+            }
+            
+            // test 4 - must not contain password 
+            four = str.ToLower().Contains("password") switch
+            {
+                // test 4
+                false => true, _ => four
+            };
+            
+            // test 5 - lenght must be greater than 7 and smaller than 31
+            five = str.Length switch
+            {
+                // test 5
+                > 7 and < 31 => true, _ => five
+            };
+
+            return one switch
+            {
+                true when two && three && four && five => "true", _ => "false"
+            };
         }
         
         /// <summary>
