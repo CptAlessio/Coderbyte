@@ -15,14 +15,15 @@ namespace CodingChallenges
     class Program
     {
         static void Main(string[] args) {
-            Console.WriteLine(CaesarCipher("Hello",4));
+            Console.WriteLine(CaesarCipher("abcab", 2));
             Console.ReadLine();
-        }
+        }      
         
         /// <summary>
         /// Solution to problem Caesar
         /// Category: Algorithms
         /// Difficult: Medium
+        /// 
         /// perform a Caesar Cipher shift on it using the num parameter as the shifting number
         /// Punctuation, spaces, and capitalization should remain intact
         /// </summary>
@@ -54,7 +55,6 @@ namespace CodingChallenges
             }
             return bout.ToString();
         }
-        
         /// <summary>
         /// Overload to get around test cases where num would be passed as string instead of int
         /// </summary>
@@ -64,11 +64,9 @@ namespace CodingChallenges
         public static string CaesarCipher(string str, string num) {
             return CaesarCipher(str, int.Parse(num));
         }
-        
         /// <summary>
         /// Solution to problem BreacketMatcher
         ///
-        /// 
         /// Have the function BracketMatcher(str) take the str parameter being passed and return 1 if
         /// the brackets are correctly matched and each one is accounted for. Otherwise return 0.
         /// For example: if str is "(hello (world))", then the output should be 1, but if str is "((hello (world))"
@@ -84,7 +82,6 @@ namespace CodingChallenges
             var c = provasplit.Where(oo => oo.Equals(')'));
             return !c.Any() && !b.Any() ? "1" : c.Count() == b.Count() ? "1" : "0";
         }
-        
         /// <summary>
         /// Solution to Test - SimplePassword
         /// return true if
@@ -96,7 +93,8 @@ namespace CodingChallenges
         /// </summary>
         /// <param name="str">Password to test</param>
         /// <returns>true/false</returns>
-        public static string SimplePassword(string str) {
+        public static string SimplePassword(string str)
+        {
 
             var one = false;
             var two = false;
@@ -105,47 +103,23 @@ namespace CodingChallenges
             var five = false;
 
             Regex ex0 = new Regex("[A-Z]"); // one capital letter
-            if (ex0.IsMatch(str))
-            {
-                one = true;
-            }
+            if (ex0.IsMatch(str)) { one = true; }
             
-            // test 2
             Regex ex1 = new Regex("[0-9]"); // one number
-            if (ex1.IsMatch(str))
-            {
-                two = true;
-            }
+            if (ex1.IsMatch(str)) { two = true; }
             
-            // test 3 - one of these characters !+=-/*
             Regex ex = new Regex(@"(\x21)|(\x2A)|(\x2B)|(\x2D)|(\x2F)|(\x3D)");
-            if (ex.IsMatch(str))
-            {
-                three = true;
-            }
+            if (ex.IsMatch(str)) {  three = true; }
             
-            // test 4 - must not contain password 
-            four = str.ToLower().Contains("password") switch
-            {
-                // test 4
-                false => true, _ => four
-            };
-            
-            // test 5 - lenght must be greater than 7 and smaller than 31
-            five = str.Length switch
-            {
-                // test 5
-                > 7 and < 31 => true, _ => five
-            };
+            four = str.ToLower().Contains("password") switch { false => true, _ => four};
+            five = str.Length switch {> 7 and < 31 => true, _ => five};
 
-            return one switch
-            {
-                true when two && three && four && five => "true", _ => "false"
-            };
+            return one switch {true when two && three && four && five => "true", _ => "false"};
         }
-        
         /// <summary>
-        /// Solution to test DIVISION
+        /// Solution to Division Challenge
+        ///
+        /// 
         /// "Find Greatest Common factor, return the greatest number that evenly goes into both numbers
         /// with no remainder." 
         /// </summary>
@@ -173,9 +147,20 @@ namespace CodingChallenges
             
             return merged.Max();
         }
-        
         /// <summary>
-        /// Solution to ArrayMatching test
+        /// Solution to ArrayMatching challenge
+        ///
+        /// Have the function ArrayMatching(strArr) read the array of strings stored in strArr which will contain
+        /// only two elements, both of which will represent an array of positive integers.
+        /// For example: if strArr is ["[1, 2, 5, 6]", "[5, 2, 8, 11]"], then both elements in the input
+        /// represent two integer arrays, and your goal for this challenge is to add the elements in corresponding
+        /// locations from both arrays. For the example input, your program should do the
+        /// following additions: [(1 + 5), (2 + 2), (5 + 8), (6 + 11)] which then equals [6, 4, 13, 17].
+        /// Your program should finally return this resulting array in a string format with each element
+        /// separated by a hyphen: 6-4-13-17.
+        /// If the two arrays do not have the same amount of elements, then simply append the remaining
+        /// elements onto the new array (example shown below). Both arrays will be in the format: [e1, e2, e3, ...]
+        /// where at least one element will exist in each arr
         /// </summary>
         /// <param name="strArr"></param>
         /// <returns></returns>
@@ -227,9 +212,13 @@ namespace CodingChallenges
 
             return b.ToString().Substring(0, b.ToString().Length-1);;
         }
-        
         /// <summary>
-        /// Solution to Palindrome test
+        /// Solution to Palindrome challenge
+        ///
+        /// Have the function Palindrome(str) take the str parameter being passed and return the string true
+        /// if the parameter is a palindrome, (the string is the same forward as it is backward)
+        /// otherwise return the string false. For example: "racecar" is also "racecar" backwards.
+        /// Punctuation and numbers will not be part of the string.
         /// </summary>
         /// <param name="str"></param>
         /// <returns></returns>
@@ -255,9 +244,14 @@ namespace CodingChallenges
             }
 
         }
-        
         /// <summary>
-        /// ExOh challenge
+        /// Solution to ExOh challenge
+        ///
+        /// Have the function ExOh(str) take the str parameter being passed and return the string true if
+        /// there is an equal number of x's and o's, otherwise return the string false.
+        /// Only these two letters will be entered in the string, no punctuation or numbers.
+        /// For example: if str is "xooxxxxooxo" then the output should return false because
+        /// there are 6 x's and 5 o's.
         /// </summary>
         /// <param name="str">Challenge input</param>
         /// <returns>true/false</returns>
@@ -279,7 +273,19 @@ namespace CodingChallenges
             }
             return output;
         }
-
+        /// <summary>
+        /// Solution to SimpleMode Challenge
+        /// Algorithms : Medium
+        /// 
+        /// Have the function SimpleMode(arr) take the array of numbers stored in arr and return
+        /// the number that appears most frequently (the mode).
+        /// For example: if arr contains [10, 4, 5, 2, 4] the output should be 4.
+        /// If there is more than one mode return the one that appeared in the array
+        /// first (ie. [5, 10, 10, 6, 5] should return 5 because it appeared first).
+        /// If there is no mode return -1. The array will not be empty.
+        /// </summary>
+        /// <param name="arr"></param>
+        /// <returns></returns>
         public static int SimpleMode(int[] arr)
         {
             var query = arr.GroupBy(x => x)
@@ -289,7 +295,15 @@ namespace CodingChallenges
             
             return query.Count >= 1 ? query.First() : 0;
         }
-
+        /// <summary>
+        /// Solution to AlphabetSoup challenge
+        ///
+        /// Have the function AlphabetSoup(str) take the str string parameter being passed and return the string
+        /// with the letters in alphabetical order (ie. hello becomes ehllo). Assume numbers and punctuation symbols
+        /// will not be included in the string.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
         public static string AlphabetSoup(string str)
         {
             var stringToArray = str.ToCharArray();
@@ -304,7 +318,21 @@ namespace CodingChallenges
 
             return b.ToString();
         }
-
+        /// <summary>
+        /// Solution to NumberSearch challenge
+        /// Algorithms:Medium
+        ///
+        /// Have the function NumberSearch(str) take the str parameter, search for all the numbers in the string,
+        /// add them together, then return that final number divided by the total amount of letters in the string.
+        /// For example: if str is "Hello6 9World 2, Nic8e D7ay!" the output should be 2.
+        /// First if you add up all the numbers, 6 + 9 + 2 + 8 + 7 you get 32.
+        /// Then there are 17 letters in the string. 32 / 17 = 1.882, and the final answer should be rounded
+        /// to the nearest whole number, so the answer is 2. Only single digit numbers separated by spaces
+        /// will be used throughout the whole string (So this won't ever be the case: hello44444 world).
+        /// Each string will also have at least one letter.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
         public static int NumberSearch(string str)
         {
             var ex = new Regex("-*[0-9]");
@@ -328,12 +356,31 @@ namespace CodingChallenges
             var output = int.Parse(decimal.Round(output2).ToString());
             return output;
         }
-
+        /// <summary>
+        /// Solution to BinaryConverter challenge
+        /// Algorithms:Medium
+        ///
+        /// Have the function BinaryConverter(str) return the decimal form of the binary value.
+        /// For example: if 101 is passed return 5, or if 1000 is passed return 8.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
         public static string BinaryConverter(string str)
         {
             return Convert.ToInt32(str, 2).ToString();
         }
-
+        /// <summary>
+        /// Solution to Consecutive challenge
+        /// Algorithms:Medium
+        ///
+        /// Have the function Consecutive(arr) take the array of integers stored in arr and return the minimum
+        /// number of integers needed to make the contents of arr consecutive from the lowest number to the
+        /// highest number. For example: If arr contains [4, 8, 6] then the output should be 2 because two
+        /// numbers need to be added to the array (5 and 7) to make it a consecutive array of numbers from 4 to 8.
+        /// Negative numbers may be entered as parameters and no array will have less than 2 elements.
+        /// </summary>
+        /// <param name="arr"></param>
+        /// <returns></returns>
         public static int Consecutive(int[] arr)
         {
             var a = arr.OrderBy(x => x).First();
@@ -343,7 +390,18 @@ namespace CodingChallenges
             output = myList2.Except(arr).ToList().Count;
             return output;
         }
-
+        /// <summary>
+        /// Solution to TripleDouble challenge
+        ///
+        /// Have the function TripleDouble(num1,num2) take both parameters being passed, and return 1 if there
+        /// is a straight triple of a number at any place in num1 and also a straight double of the same
+        /// number in num2. For example: if num1 equals 451999277 and num2 equals 41177722899, then return 1
+        /// because in the first parameter you have the straight triple 999 and you have a straight double, 99,
+        /// of the same number in the second parameter. If this isn't the case, return 0.
+        /// </summary>
+        /// <param name="num1"></param>
+        /// <param name="num2"></param>
+        /// <returns></returns>
         public static int TripleDouble(int num1, int num2)
         {
             var output = 0;
@@ -374,14 +432,35 @@ namespace CodingChallenges
             }
             return output;
         }
-
+        /// <summary>
+        /// Solution to FormattedDivision challenge
+        /// 
+        /// Have the function FormattedDivision(num1,num2) take both parameters being passed, divide num1 by num2,
+        /// and return the result as a string with properly formatted commas and 4 significant digits after the
+        /// decimal place. For example: if num1 is 123456789 and num2 is 10000 the output should be "12,345.6789".
+        /// The output must contain a number in the one's place even if it is a zero.
+        /// </summary>
+        /// <param name="num1"></param>
+        /// <param name="num2"></param>
+        /// <returns></returns>
         public static string FormattedDivision(int num1, int num2)
         {
             decimal a = num1, b = num2;
             var output = a / b;
             return output.ToString("###,###,###.####");
         }
-
+        /// <summary>
+        /// Solution to Runlenght challenge
+        /// Algorithms:Medium
+        /// 
+        /// Have the function RunLength(str) take the str parameter being passed and return a compressed version
+        /// of the string using the Run-length encoding algorithm. This algorithm works by taking
+        /// the occurrence of each repeating character and outputting that number along with a single character
+        /// of the repeating sequence. For example: "wwwggopp" would return 3w2g1o2p.
+        /// The string will not contain any numbers, punctuation, or symbols.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
         public static string RunLength(string str)
         {
             var characters = str.ToCharArray();
@@ -411,29 +490,18 @@ namespace CodingChallenges
             }
             return stringBuilder.ToString();
         }
-
-        public static string RunLengthOld(string str)
-        {
-            var characters = str.ToCharArray();
-            var distinctstr = new List<char>(characters.Distinct());
-            var stringBuilder = new StringBuilder();
-
-            foreach (var t in distinctstr)
-            {
-                var counter = characters.Count(c2 => t.Equals(c2));
-                switch (counter)
-                {
-                    case > 1:
-                        stringBuilder.Append(counter.ToString() + t.ToString());
-                        break;
-                    case 1:
-                        stringBuilder.Append("1" + t);
-                        break;
-                }
-            }
-            return stringBuilder.ToString();
-        }
-
+        /// <summary>
+        /// Solution to DivisionStringified challenge
+        /// Algorithms:Easy
+        /// 
+        /// Have the function DivisionStringified(num1,num2) take both parameters being passed,
+        /// divide num1 by num2, and return the result as a string with properly formatted commas.
+        /// If an answer is only 3 digits long, return the number with no commas (ie. 2 / 3 should output "1").
+        /// For example: if num1 is 123456789 and num2 is 10000 the output should be "12,346".
+        /// </summary>
+        /// <param name="num1"></param>
+        /// <param name="num2"></param>
+        /// <returns></returns>
         public static string DivisionStringified(int num1, int num2)
         {
             var c = 0.0;
@@ -452,7 +520,19 @@ namespace CodingChallenges
             if (output.Length > 3) { output = $"{c:#,0}"; }
             return output;
         }
-
+        /// <summary>
+        /// Solution to OtherProducts challenge
+        ///
+        /// Have the function OtherProducts(arr) take the array of numbers stored in arr and return a new list
+        /// of the products of all the other numbers in the array for each element.
+        /// For example: if arr is [1, 2, 3, 4, 5] then the new array, where each location in the new array is
+        /// the product of all other elements, is [120, 60, 40, 30, 24]. The following calculations were performed
+        /// to get this answer: [(2*3*4*5), (1*3*4*5), (1*2*4*5), (1*2*3*5), (1*2*3*4)]. You should generate this
+        /// new array and then return the numbers as a string joined by a hyphen: 120-60-40-30-24. The array will
+        /// contain at most 10 elements and at least 1 element of only positive integers.
+        /// </summary>
+        /// <param name="arr"></param>
+        /// <returns></returns>
         public static string OtherProducts(int[] arr)
         {
             var arrOutput = new List<int>();
@@ -475,7 +555,15 @@ namespace CodingChallenges
             output = output.Remove(output.Length - 1, 1);
             return output;
         }
-
+        /// <summary>
+        /// Solution to FirstReverse challenge
+        ///
+        /// Have the function FirstReverse(str) take the str parameter being passed and return the
+        /// string in reversed order. For example: if the input string is "Hello World and Coders"
+        /// then your program should return the string sredoC dna dlroW olleH.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
         public static string FirstReverse(string str)
         {
             var strArrayChar = str.ToCharArray();
@@ -488,8 +576,21 @@ namespace CodingChallenges
             }
             return b.ToString();
         }
-
-
+        /// <summary>
+        /// Solution to TreeConstructor Challenge
+        ///
+        /// Have the function TreeConstructor(strArr) take the array of strings stored in strArr,
+        /// which will contain pairs of integers in the following format: (i1,i2), where i1 represents a
+        /// child node in a tree and the second integer i2 signifies that it is the parent of i1.
+        /// For example: if strArr is ["(1,2)", "(2,4)", "(7,2)"], then this forms the following tree:
+        ///
+        /// which you can see forms a proper binary tree. Your program should, in this case, return the string
+        /// true because a valid binary tree can be formed. If a proper binary tree cannot be formed with the
+        /// integer pairs, then return the string false. All of the integers within the tree will be unique,
+        /// which means there can only be one node in the tree with the given integer value.
+        /// </summary>
+        /// <param name="strArr"></param>
+        /// <returns></returns>
         public static string TreeConstructor(string[] strArr)
         {
             var treeObject = new Dictionary<string, int>();
@@ -511,7 +612,15 @@ namespace CodingChallenges
             }
             return "true";
         }
-
+        /// <summary>
+        /// Solution to PrimeTime challenge
+        ///
+        /// Have the function PrimeTime(num) take the num parameter being passed and return the string
+        /// true if the parameter is a prime number, otherwise return the string false. The range will
+        /// be between 1 and 2^16.
+        /// </summary>
+        /// <param name="num"></param>
+        /// <returns></returns>
         public static string PrimeTime(int num)
         {
             var output = "false";
@@ -529,7 +638,16 @@ namespace CodingChallenges
             }
             return output;
         }
-
+        /// <summary>
+        /// Solution to LetterChanges challenge
+        ///
+        /// Have the function LetterChanges(str) take the str parameter being passed and modify it
+        /// using the following algorithm. Replace every letter in the string with the letter following it
+        /// in the alphabet (ie. c becomes d, z becomes a). Then capitalize every vowel in this new
+        /// string (a, e, i, o, u) and finally return this modified string.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
         public static string LetterChanges(string str)
         {
             var list = new List<char>();
@@ -561,12 +679,19 @@ namespace CodingChallenges
             output = output.Replace("u", "U");
             return output;
         }
-
+        /// <summary>
+        /// Solution to WordCount challenge
+        ///
+        /// Have the function WordCount(str) take the str string parameter being passed and return the number
+        /// of words the string contains (e.g. "Never eat shredded wheat or cake" would return 6).
+        /// Words will be separated by single spaces.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
         public static string WordCount(string str)
         {
             return str.Split(" ").Length.ToString();
         }
-
         public static int SimpleAdding(int num)
         {
             var totalSum = 0;
@@ -576,14 +701,12 @@ namespace CodingChallenges
             }
             return totalSum;
         }
-
         public static string LetterCapitalize(string str)
         {
             var text = str.Split(" ");
             var newtext = text.Select(s => CultureInfo.CurrentCulture.TextInfo.ToTitleCase(str.ToLower())).ToList();
             return newtext.First().ToString();
         }
-
         public static string CountingMinutesI(string str)
         {
             var inputTimes = str.Split("-");
@@ -594,7 +717,6 @@ namespace CodingChallenges
             var difference = secondDate - firstDate;
             return difference.TotalMinutes.ToString();
         }
-
         public static string CheckNums(int num1, int num2)
         {
             if (num1 > num2)
@@ -603,7 +725,6 @@ namespace CodingChallenges
             }
             return num1 == num2 ? "-1" : "false";
         }
-
         public static string TimeConvert(int num)
         {
             var before = DateTime.Now;
@@ -613,7 +734,6 @@ namespace CodingChallenges
            
             return output;
         }
-
         public static string SecondGreatLow(int[] arr)
         {
             var minimumValue = arr.Min();
@@ -636,7 +756,6 @@ namespace CodingChallenges
 
             return secondLowestValue + " " + secondHighestValue;
         }
-
         public static string ArrayAddition(int[] arr)
         {
             var maxValue = arr.Max();
@@ -660,7 +779,6 @@ namespace CodingChallenges
             }
             return sumvalue == maxValue ? "true" : "false";
         }
-
         public static string LetterCount(string str)
         {
             var collection = new Dictionary<string, int>();
@@ -686,7 +804,6 @@ namespace CodingChallenges
             }
             return output;           
         }
-
         public static string VowelCount(string str)
         {
             var counter = 0;
@@ -700,8 +817,7 @@ namespace CodingChallenges
             }
             return counter.ToString();
         }
-
-        static int recursiveCatalan(int n)
+        static int RecursiveCatalan(int n)
         {
             var res = 0;
             if (n <= 1)
@@ -710,12 +826,11 @@ namespace CodingChallenges
             }
             for (var i = 0; i < n; i++)
             {
-                res += recursiveCatalan(i) * recursiveCatalan(n - i - 1);
+                res += RecursiveCatalan(i) * RecursiveCatalan(n - i - 1);
             }
             return res;
         }
-
-        public static string ABCheck(string str)
+        public static string AbCheck(string str)
         {
             var ex = new Regex("a.{3}b");
             return ex.IsMatch(str) ? "true" : "false";
@@ -803,7 +918,7 @@ namespace CodingChallenges
             Console.WriteLine(factorial);
             return factorial;
         }   
-        static void reverse()
+        static void Reverse()
         {
             var str = "alessio";
             var strArrayChar = str.ToCharArray();
@@ -816,7 +931,7 @@ namespace CodingChallenges
             }
             Console.WriteLine(b.ToString());
         }
-        static string examMethod5()
+        static string ExamMethod5()
         {
             var str = "acc?7??sss?3rr1??????5";
 
@@ -863,7 +978,7 @@ namespace CodingChallenges
 
             return counter == 3 ? "true" : "false";
         }
-        static int examMethod4()
+        static int ExamMethod4()
         {
             var test = "(coder)(byte))";
             var provasplit = test.ToArray();
@@ -877,7 +992,7 @@ namespace CodingChallenges
 
             return c.Count() == b.Count() ? 1 : 0;
         }
-        static string usernamevalidator(string str)
+        static string Usernamevalidator(string str)
         {
             var test_1 = false;
             var test_3 = false;
@@ -919,43 +1034,7 @@ namespace CodingChallenges
 
             return output;
         }
-        static string examMethod3()
-        {
-            var input = new string[] { "aaffhkksemckelloe", "fhea" };
-            var N = input[0];
-            var K = input[1];
-            for (var i = 1; i < N.Length; i++)
-            {
-                var prova = N.Substring(0, i);
-                var good = 0;
-                var bad = 0;
-
-                foreach (var zz in K)
-                {
-                    if (prova.Contains(zz))
-                    {
-                        good++;
-                    }
-                    else
-                    {
-                        bad++;
-                    }
-
-                    if (bad > 0)
-                    {
-                        break;
-                    }
-                }
-
-                if (good == K.Length) //?
-                {
-                    var provasplit = prova.ToArray();
-                }
-
-            }
-            return string.Empty;
-        }
-        static string examMethod2()
+        static string ExamMethod2()
         {
             var input = new string[] { "aaffhkksemckelloe", "fhea" };
             var N = input[0];
@@ -991,7 +1070,7 @@ namespace CodingChallenges
             }
             return string.Empty;
         }
-        static void examMethod() {
+        static void ExamMethod() {
 
             var input = new string[] { "aaffhkksemckelloe", "fhea" };
             var N = input[0];
