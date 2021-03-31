@@ -15,7 +15,12 @@ namespace CodingChallenges
     class Program
     {
         static void Main(string[] args) {
+            Console.WriteLine("================================");
+            Console.WriteLine("  Coding Challenges Workspace   ");
+            Console.WriteLine("================================");
+            
             Console.WriteLine(CaesarCipher("abcab", 2));
+            
             Console.ReadLine();
         }      
         
@@ -77,9 +82,9 @@ namespace CodingChallenges
         /// <returns></returns>
         public static string BracketMatcher(string str) {
 
-            char[] provasplit = str.ToArray();
-            var b = provasplit.Where(pp => pp.Equals('('));
-            var c = provasplit.Where(oo => oo.Equals(')'));
+            char[] strArr = str.ToArray();
+            var b = strArr.Where(pp => pp.Equals('('));
+            var c = strArr.Where(oo => oo.Equals(')'));
             return !c.Any() && !b.Any() ? "1" : c.Count() == b.Count() ? "1" : "0";
         }
         /// <summary>
@@ -95,22 +100,19 @@ namespace CodingChallenges
         /// <returns>true/false</returns>
         public static string SimplePassword(string str)
         {
-
             var one = false;
             var two = false;
             var three = false;
             var four = false;
             var five = false;
 
-            Regex ex0 = new Regex("[A-Z]"); // one capital letter
-            if (ex0.IsMatch(str)) { one = true; }
-            
-            Regex ex1 = new Regex("[0-9]"); // one number
-            if (ex1.IsMatch(str)) { two = true; }
-            
-            Regex ex = new Regex(@"(\x21)|(\x2A)|(\x2B)|(\x2D)|(\x2F)|(\x3D)");
-            if (ex.IsMatch(str)) {  three = true; }
-            
+            var case_1 = new Regex("[A-Z]");
+            var case_2 = new Regex("[0-9]");
+            var case_3 = new Regex(@"(\x21)|(\x2A)|(\x2B)|(\x2D)|(\x2F)|(\x3D)");
+
+            one = case_1.IsMatch(str);
+            two = case_2.IsMatch(str);
+            three = case_3.IsMatch(str);
             four = str.ToLower().Contains("password") switch { false => true, _ => four};
             five = str.Length switch {> 7 and < 31 => true, _ => five};
 
@@ -181,8 +183,8 @@ namespace CodingChallenges
             
             for (int i = maxFindings - 1; i >= 0; i--)
             {
-                int firstValue = 0; 
-                int secondValue = 0; 
+                var firstValue = 0; 
+                var secondValue = 0; 
                 try
                 {
                     firstValue= int.Parse(oneExCollection[i].Value);
@@ -258,14 +260,14 @@ namespace CodingChallenges
         public static string ExOh(string str)
         {
             var output = "false";
-            var r1 = new Regex("[o]");
-            var r2 = new Regex("[x]");
+            var letter_o = new Regex("[o]");
+            var letter_x = new Regex("[x]");
 
-            var mtcO = r1.Matches(str);
-            var mtcX = r2.Matches(str);
+            var mtcO = letter_o.Matches(str);
+            var mtcX = letter_x.Matches(str);
 
             var oCounter = mtcO.Count;
-            var xCounter = mtcX.Count();
+            var xCounter = mtcX.Count;
 
             if (oCounter.Equals(xCounter))
             {
@@ -309,14 +311,14 @@ namespace CodingChallenges
             var stringToArray = str.ToCharArray();
             Array.Sort(stringToArray);
 
-            var b = new StringBuilder();
+            var writer = new StringBuilder();
 
             foreach(var s in stringToArray)
             {
-                b.Append(s);
+                writer.Append(s);
             }
 
-            return b.ToString();
+            return writer.ToString();
         }
         /// <summary>
         /// Solution to NumberSearch challenge
@@ -383,10 +385,10 @@ namespace CodingChallenges
         /// <returns></returns>
         public static int Consecutive(int[] arr)
         {
-            var a = arr.OrderBy(x => x).First();
-            var b = arr.OrderBy(x => x).Last();
+            var first_character = arr.OrderBy(x => x).First();
+            var last_character = arr.OrderBy(x => x).Last();
             var output = 0;
-            var myList2 = Enumerable.Range(a, b - a + 1).ToList();
+            var myList2 = Enumerable.Range(first_character, last_character - first_character + 1).ToList();
             output = myList2.Except(arr).ToList().Count;
             return output;
         }
@@ -406,11 +408,13 @@ namespace CodingChallenges
         {
             var output = 0;
 
-            /// three in num1 and two in num2
             var firstString = num1.ToString().ToCharArray();
             var secondString = num2.ToString().ToCharArray();
 
-            var query = (from g in firstString.GroupBy(x => x) where g.Count() > 1 select g.Key).ToList();
+            var query = (from g in firstString.GroupBy(x => x) 
+                where g.Count() > 1 
+                select g.Key).ToList();
+            
             var counter = firstString.Where(t => query.Count >= 1).Count(t => t == query.First());
             var secondCounter = 0;
 
@@ -422,14 +426,8 @@ namespace CodingChallenges
                     secondCounter++;
                 }
             }
-            if (counter >= 3 && secondCounter >= 2)
-            {
-                output = 1;
-            }
-            else
-            {
-                output = 0;
-            }
+            
+            if (counter >= 3 && secondCounter >= 2) { output = 1; } else { output = 0;}
             return output;
         }
         /// <summary>
@@ -445,8 +443,8 @@ namespace CodingChallenges
         /// <returns></returns>
         public static string FormattedDivision(int num1, int num2)
         {
-            decimal a = num1, b = num2;
-            var output = a / b;
+            decimal firstNumber = num1, secondNumber = num2;
+            var output = firstNumber / secondNumber;
             return output.ToString("###,###,###.####");
         }
         /// <summary>
@@ -464,7 +462,6 @@ namespace CodingChallenges
         public static string RunLength(string str)
         {
             var characters = str.ToCharArray();
-            var chars = new List<char>(characters.Distinct());
             var stringBuilder = new StringBuilder();
             for (var i =0;i<characters.Length;i++)
             {
@@ -481,7 +478,7 @@ namespace CodingChallenges
                 switch (counter)
                 {
                     case > 1:
-                        stringBuilder.Append(counter.ToString() + characters[i].ToString());
+                        stringBuilder.Append(counter + characters[i].ToString());
                         break;
                     case 1:
                         stringBuilder.Append("1" + characters[i]);
@@ -505,12 +502,6 @@ namespace CodingChallenges
         public static string DivisionStringified(int num1, int num2)
         {
             var c = 0.0;
-           
-            if (num1 >= 10 && num1 <=100)
-            {
-
-            }
-
             c = (num1 / num2);
 
             if (c == 1) { c = 0; }
@@ -569,12 +560,12 @@ namespace CodingChallenges
             var strArrayChar = str.ToCharArray();
             Array.Reverse(strArrayChar);
 
-            var b = new StringBuilder();
+            var writer = new StringBuilder();
             foreach (var c in strArrayChar)
             {
-                b.Append(c);
+                writer.Append(c);
             }
-            return b.ToString();
+            return writer.ToString();
         }
         /// <summary>
         /// Solution to TreeConstructor Challenge
@@ -594,7 +585,6 @@ namespace CodingChallenges
         public static string TreeConstructor(string[] strArr)
         {
             var treeObject = new Dictionary<string, int>();
-            var output = string.Empty;
             foreach(var singleInputValue in strArr)
             {
                 var currentvalue = singleInputValue.Split(',');
@@ -705,7 +695,7 @@ namespace CodingChallenges
         {
             var text = str.Split(" ");
             var newtext = text.Select(s => CultureInfo.CurrentCulture.TextInfo.ToTitleCase(str.ToLower())).ToList();
-            return newtext.First().ToString();
+            return newtext.First();
         }
         public static string CountingMinutesI(string str)
         {
