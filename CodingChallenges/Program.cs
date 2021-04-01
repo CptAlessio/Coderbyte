@@ -1,12 +1,11 @@
 ﻿using System;
+using System.Text;
+using System.Linq;
+using System.Globalization;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using System.Linq;
-using System.Text;
-using System.Globalization;
 
 /// <summary>
-/// AUTHOR: Alessio Marziali
 /// DESCRIPTION: Coderbyte Coding Challenges working project
 /// URL : https://coderbyte.com/profile/RegiaMarinaAlex
 /// </summary>
@@ -19,10 +18,47 @@ namespace CodingChallenges
             Console.WriteLine("  Coding Challenges Workspace   ");
             Console.WriteLine("================================");
             
-            Console.WriteLine(CaesarCipher("abcab", 2));
+            Console.WriteLine(ArrayRotation(new int[] {1,1,2}));
             
             Console.ReadLine();
-        }      
+        }
+        
+        /// <summary>
+        /// Solution to challenge ArrayRotation
+        /// Algorithms : Hard
+        ///
+        ///
+        /// Have the function ArrayRotation(arr) take the arr parameter being passed which will be an
+        /// array of non-negative integers and circularly rotate the array starting from the Nth
+        /// element where N is equal to the first integer in the array.
+        /// For example: if arr is [2, 3, 4, 1, 6, 10] then your program should rotate the array starting
+        /// from the 2nd position because the first element in the array is 2.
+        /// The final array will therefore be [4, 1, 6, 10, 2, 3], and your program should return the new
+        /// array as a string, so for this example your program would return 4161023. The first element in
+        /// the array will always be an integer greater than or equal to 0 and less than the size of the array.
+        /// </summary>
+        /// <param name="arr"></param>
+        /// <returns></returns>
+        public static string ArrayRotation(int[] arr)
+        {
+            var rotateBy = arr.First();
+            var arrOutputData = new List<int>();
+
+            for (var numberAfter = rotateBy; numberAfter < arr.Length; numberAfter++)
+            {
+                arrOutputData.Add(arr[numberAfter]);
+            }
+
+            for (var numberBefore = 0; numberBefore < rotateBy; numberBefore++)
+            {
+                arrOutputData.Add(arr[numberBefore]);
+            }
+
+            var writer = new StringBuilder();
+            foreach (var arrayItem in arrOutputData) { writer.Append(arrayItem); }
+            
+            return writer.ToString();
+        }
         
         /// <summary>
         /// Solution to problem Caesar
