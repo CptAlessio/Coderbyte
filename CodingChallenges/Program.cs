@@ -18,14 +18,76 @@ namespace CodingChallenges
             Console.WriteLine("  Coding Challenges Workspace   ");
             Console.WriteLine("================================");
             
-            Console.WriteLine(ArrayRotation(new int[] {1,1,2}));
+            Console.WriteLine(TwoSum(new int[] {17, 4, 5, 6, 10, 11, 4, -3, -5, 3, 15, 2, 7}));
             
             Console.ReadLine();
         }
         
+        public static string TwoSum(int[] arr)
+        {
+            var firstNumber = arr.First();
+            
+            var newArray = new int[arr.Length - 1];
+            for (int i = 0; i <= arr.Length-1; i++)
+            {
+
+                newArray[i] = arr[i+1];
+            }
+
+            Dictionary<int, int> storage = new Dictionary<int, int>();
+
+            for (var index = 0; index <= newArray.Length; index++)
+            {
+                for (var index2 = index+1; index2 <= newArray.Length; index2++)
+                {
+                    if (index + index2 == firstNumber)
+                    {
+                        storage.Add(newArray[index], newArray[index2]);
+                    }
+                }
+                
+            }
+
+            StringBuilder writer = new StringBuilder();
+            foreach (KeyValuePair<int, int> kpair in storage)
+            {
+                writer.Append(kpair.Key +"," + kpair.Value + " ");
+            }
+
+            // code goes here  
+            return writer.ToString().Remove(writer.ToString().Length - 1);
+
+        }
+        
+        /// <summary>
+        /// Solution to challenge Array Couples
+        /// Category : Arrays
+        /// Level: Hard
+        ///
+        ///
+        /// Have the function ArrayCouples(arr) take the arr parameter being passed which will be an array of an
+        /// even number of positive integers, and determine if each pair of integers, [k, k+1], [k+2, k+3], etc.
+        /// in the array has a corresponding reversed pair somewhere else in the array.
+        /// For example: if arr is [4, 5, 1, 4, 5, 4, 4, 1] then your program should output the string yes
+        /// because the first pair 4, 5 has the reversed pair 5, 4 in the array, and the next pair, 1, 4 has
+        /// the reversed pair 4, 1 in the array as well. But if the array doesn't contain all pairs with their
+        /// reversed pairs, then your program should output a string of the integer pairs that are incorrect,
+        /// in the order that they appear in the array.
+        /// 
+        /// For example: if arr is [6, 2, 2, 6, 5, 14, 14, 1] then your program should output
+        /// the string 5,14,14,1 with only a comma separating the integers.
+        /// </summary>
+        /// <param name="arr"></param>
+        /// <returns></returns>
+        public static string ArrayCouples(int[] arr) {
+            
+            return "TODO NEXT";
+        }
+        
         /// <summary>
         /// Solution to challenge ArrayRotation
-        /// Algorithms : Hard
+        /// Category: Array
+        /// Level: Hard
         ///
         ///
         /// Have the function ArrayRotation(arr) take the arr parameter being passed which will be an
@@ -63,7 +125,7 @@ namespace CodingChallenges
         /// <summary>
         /// Solution to problem Caesar
         /// Category: Algorithms
-        /// Difficult: Medium
+        /// Level: Medium
         /// 
         /// perform a Caesar Cipher shift on it using the num parameter as the shifting number
         /// Punctuation, spaces, and capitalization should remain intact
@@ -718,6 +780,14 @@ namespace CodingChallenges
         {
             return str.Split(" ").Length.ToString();
         }
+        /// <summary>
+        /// Have the function SimpleAdding(num) add up all the numbers from 1 to num. 
+        /// For example: if the input is 4 then your program should return 10 because 1 + 2 + 3 + 4 = 10. 
+        /// For the test cases, the parameter num will be any number from 1 to 1000.
+        /// Use the Parameter Testing feature in the box below to test your code with different arguments.
+        /// </summary>
+        /// <param name="num"></param>
+        /// <returns></returns>
         public static int SimpleAdding(int num)
         {
             var totalSum = 0;
@@ -727,12 +797,27 @@ namespace CodingChallenges
             }
             return totalSum;
         }
+        /// <summary>
+        /// Have the function LetterCapitalize(str) take the str parameter being passed and 
+        /// capitalize the first letter of each word. Words will be separated by only one space.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
         public static string LetterCapitalize(string str)
         {
             var text = str.Split(" ");
             var newtext = text.Select(s => CultureInfo.CurrentCulture.TextInfo.ToTitleCase(str.ToLower())).ToList();
             return newtext.First();
         }
+        /// <summary>
+        /// Have the function CountingMinutesI(str) take the str parameter being passed which will 
+        /// be two times (each properly formatted with a colon and am or pm) separated by a hyphen and 
+        /// return the total number of minutes between the two times. The time will be in a 12 hour clock 
+        /// format. For example: if str is 9:00am-10:00am then the output should be 60. 
+        /// If str is 1:00pm-11:00am the output should be 1320.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
         public static string CountingMinutesI(string str)
         {
             var inputTimes = str.Split("-");
@@ -743,6 +828,14 @@ namespace CodingChallenges
             var difference = secondDate - firstDate;
             return difference.TotalMinutes.ToString();
         }
+        /// <summary>
+        /// Have the function CheckNums(num1,num2) take both parameters being passed and return the 
+        /// string true if num2 is greater than num1, otherwise return the string false. 
+        /// If the parameter values are equal to each other then return the string -1.
+        /// </summary>
+        /// <param name="num1"></param>
+        /// <param name="num2"></param>
+        /// <returns></returns>
         public static string CheckNums(int num1, int num2)
         {
             if (num1 > num2)
@@ -751,6 +844,13 @@ namespace CodingChallenges
             }
             return num1 == num2 ? "-1" : "false";
         }
+        /// <summary>
+        /// Have the function TimeConvert(num) take the num parameter being passed and return the number 
+        /// of hours and minutes the parameter converts to (ie. if num = 63 then the output should be 1:3). 
+        /// Separate the number of hours and minutes with a colon.
+        /// </summary>
+        /// <param name="num"></param>
+        /// <returns></returns>
         public static string TimeConvert(int num)
         {
             var before = DateTime.Now;
@@ -760,6 +860,15 @@ namespace CodingChallenges
            
             return output;
         }
+        /// <summary>
+        /// Have the function SecondGreatLow(arr) take the array of numbers stored in arr and return the 
+        /// second lowest and second greatest numbers, respectively, separated by a space. 
+        /// For example: if arr contains [7, 7, 12, 98, 106] the output should be 12 98. 
+        /// The array will not be empty and will contain at least 2 numbers. 
+        /// It can get tricky if there's just two numbers!
+        /// </summary>
+        /// <param name="arr"></param>
+        /// <returns></returns>
         public static string SecondGreatLow(int[] arr)
         {
             var minimumValue = arr.Min();
@@ -782,6 +891,16 @@ namespace CodingChallenges
 
             return secondLowestValue + " " + secondHighestValue;
         }
+        /// <summary>
+        /// Have the function ArrayAdditionI(arr) take the array of numbers stored in arr and return 
+        /// the string true if any combination of numbers in the array (excluding the largest number) 
+        /// can be added up to equal the largest number in the array, otherwise return the string false.
+        /// For example: if arr contains [4, 6, 23, 10, 1, 3] the output should return true 
+        /// because 4 + 6 + 10 + 3 = 23. The array will not be empty, 
+        /// will not contain all the same elements, and may contain negative numbers.
+        /// </summary>
+        /// <param name="arr"></param>
+        /// <returns></returns>
         public static string ArrayAddition(int[] arr)
         {
             var maxValue = arr.Max();
@@ -805,6 +924,14 @@ namespace CodingChallenges
             }
             return sumvalue == maxValue ? "true" : "false";
         }
+        /// <summary>
+        /// Have the function LetterCountI(str) take the str parameter being passed and return the first word 
+        /// with the greatest number of repeated letters. For example: "Today, is the greatest day ever!" 
+        /// should return greatest because it has 2 e's (and 2 t's) and it comes before ever which also has 2 e's. 
+        /// If there are no words with repeating letters return -1. Words will be separated by spaces.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
         public static string LetterCount(string str)
         {
             var collection = new Dictionary<string, int>();
@@ -819,7 +946,6 @@ namespace CodingChallenges
 
             var result = collection.OrderByDescending(b => b.Value);
 
-
             if (result.Any())
             {
                 output = result.First().Value > 0 ? result.First().Key : "-1";
@@ -830,6 +956,13 @@ namespace CodingChallenges
             }
             return output;           
         }
+        /// <summary>
+        /// Have the function VowelCount(str) take the str string parameter being passed and return 
+        /// the number of vowels the string contains (ie. "All cows eat grass and moo" would return 8). 
+        /// Do not count y as a vowel for this challenge.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
         public static string VowelCount(string str)
         {
             var counter = 0;
@@ -843,6 +976,11 @@ namespace CodingChallenges
             }
             return counter.ToString();
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="n"></param>
+        /// <returns></returns>
         static int RecursiveCatalan(int n)
         {
             var res = 0;
@@ -856,6 +994,14 @@ namespace CodingChallenges
             }
             return res;
         }
+        /// <summary>
+        /// Have the function ABCheck(str) take the str parameter being passed and return the string true 
+        /// if the characters a and b are separated by exactly 3 places anywhere in the string at 
+        /// least once (ie. "lane borrowed" would result in true because there is 
+        /// exactly three characters between a and b). Otherwise return the string false.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
         public static string AbCheck(string str)
         {
             var ex = new Regex("a.{3}b");
@@ -887,6 +1033,15 @@ namespace CodingChallenges
             return string.Empty;
             
         }
+        /// <summary>
+        /// Have the function SimpleSymbols(str) take the str parameter being passed and determine if it 
+        /// is an acceptable sequence by either returning the string true or false. The str parameter will be 
+        /// composed of + and = symbols with several characters between them (ie. ++d+===+c++==a) and for the 
+        /// string to be true each letter must be surrounded by a + symbol. So the string to the left 
+        /// would be false. The string will not be empty and will have at least one letter.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
         public static string SimpleSymbols(string str)
         {
             var returnValue = false;
@@ -904,6 +1059,9 @@ namespace CodingChallenges
             returnValue = totalLettersInWord == totalCorrectFormat;
             return returnValue.ToString();
         }
+        /// <summary>
+        /// 
+        /// </summary>
         static void ciaociao()
         {
             var args = new string[6];
@@ -933,6 +1091,13 @@ namespace CodingChallenges
 
             Console.WriteLine(output);
         }
+        /// <summary>
+        /// Have the function FirstFactorial(num) take the num parameter being passed and return the factorial of it. 
+        /// For example: if num = 4, then your program should return (4 * 3 * 2 * 1) = 24. 
+        /// For the test cases, the range will be between 1 and 18 and the input will always be an integer.
+        /// </summary>
+        /// <param name="num"></param>
+        /// <returns></returns>
         public static int FirstFactorial(int num)
         {
             var factorial = num;
@@ -943,7 +1108,10 @@ namespace CodingChallenges
 
             Console.WriteLine(factorial);
             return factorial;
-        }   
+        } 
+        /// <summary>
+        /// 
+        /// </summary>
         static void Reverse()
         {
             var str = "alessio";
@@ -1004,6 +1172,10 @@ namespace CodingChallenges
 
             return counter == 3 ? "true" : "false";
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         static int ExamMethod4()
         {
             var test = "(coder)(byte))";
@@ -1018,6 +1190,17 @@ namespace CodingChallenges
 
             return c.Count() == b.Count() ? 1 : 0;
         }
+        /// <summary>
+        /// Have the function CodelandUsernameValidation(str) take the str parameter being passed and determine if 
+        /// the string is a valid username according to the following rules:
+        /// 1. The username is between 4 and 25 characters.
+        ///2. It must start with a letter.
+        ///3. It can only contain letters, numbers, and the underscore character.
+        ///4. It cannot end with an underscore character.
+        /// If the username is valid then your program should return the string true, otherwise return the string false.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
         static string Usernamevalidator(string str)
         {
             var test_1 = false;
@@ -1126,6 +1309,5 @@ namespace CodingChallenges
             var output = N.Substring(0, charactersNlookedthrough);
             Console.WriteLine(output);
         }
-   
     }
 }
