@@ -35,7 +35,6 @@ namespace CodingChallenges
             }
 
             Dictionary<int, int> storage = new Dictionary<int, int>();
-
             for (var index = 0; index <= newArray.Length; index++)
             {
                 for (var index2 = index+1; index2 <= newArray.Length; index2++)
@@ -45,11 +44,10 @@ namespace CodingChallenges
                         storage.Add(newArray[index], newArray[index2]);
                     }
                 }
-                
             }
 
             StringBuilder writer = new StringBuilder();
-            foreach (KeyValuePair<int, int> kpair in storage)
+            foreach (var kpair in storage)
             {
                 writer.Append(kpair.Key +"," + kpair.Value + " ");
             }
@@ -138,11 +136,11 @@ namespace CodingChallenges
             var strArr = str.ToCharArray();
             var newChars = new List<char>();
 
-            for (int i = 0; i < strArr.Length; i++)
+            for (var i = 0; i < strArr.Length; i++)
             {
                 if (char.IsLetterOrDigit(strArr[i]))
                 {
-                    char tChar = (char) (strArr[i]+num);
+                    var tChar = (char) (strArr[i]+num);
                     newChars.Add(char.IsUpper(strArr[i]) ? char.ToUpper(tChar) : tChar);
                 }
                 else
@@ -307,7 +305,7 @@ namespace CodingChallenges
             StringBuilder b = new StringBuilder();
             foreach (int i in arrayOutput)
             {
-                b.Append(i.ToString()+ "-");
+                b.Append(i+ "-");
             }
 
             return b.ToString().Substring(0, b.ToString().Length-1);;
@@ -338,10 +336,8 @@ namespace CodingChallenges
             {
                 return "true";
             }
-            else
-            {
-                return "false";
-            }
+
+            return "false";
 
         }
         /// <summary>
