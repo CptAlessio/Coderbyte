@@ -1,4 +1,3 @@
 # CodingChallenges
 
-Solutions to coding challenges in coderbyte.com
-see: https://coderbyte.com/profile/RegiaMarinaAlex
+A collection of my solutions to coding challenges on CoderByte
